@@ -1,5 +1,11 @@
-import { login, responseStatuses, users } from './constants';
-import { LoginFetchResponse, LoginUserData, User } from './interfaces';
+import { login, responseStatuses, send, users } from './constants';
+import {
+  LoginFetchResponse,
+  LoginUserData,
+  MessageData,
+  MessageFetchResponse,
+  User,
+} from './interfaces';
 
 const logInUser = async (userData: LoginUserData) => {
   try {
@@ -59,4 +65,32 @@ const getUserById = async (userId: string) => {
   }
 };
 
-export { logInUser, getUsers, getUserById };
+const sendMessage = async (messageData: MessageData) => {
+  try {
+    const response = await fetch(`${send}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(messageData),
+    });
+    if (response.status === responseStatuses.status400) {
+      return {
+        currentMessage: null,
+        status: response.status,
+        message: (await response.json()).message,
+      };
+    }
+    const messageResponse: MessageFetchResponse = await response.json();
+    return {
+      currentMessage: messageResponse.newMessage,
+      status: response.status,
+      message: messageResponse.message,
+    };
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+export { logInUser, getUsers, getUserById, sendMessage };

@@ -3,6 +3,16 @@ interface User {
   username: string;
 }
 
+interface Message {
+  _id: string;
+  subject: string;
+  body: string;
+  sender: string;
+  receiver: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface LoginUserData {
   username: string;
 }
@@ -24,10 +34,25 @@ interface UserSelect {
   label: string | undefined;
 }
 
+interface MessageData {
+  subject: string;
+  body: string;
+  sender: string;
+  receiver: string;
+}
+interface MessageFetchResponse {
+  newMessage: Message;
+  status: number;
+  message: string;
+}
+
 export type {
   User,
+  Message,
   LoginUserData,
   LoginFetchResponse,
   LoginResponse,
   UserSelect,
+  MessageData,
+  MessageFetchResponse,
 };
