@@ -106,4 +106,23 @@ const receiveMessages = async (receiverId: string) => {
   }
 };
 
-export { logInUser, getUsers, getUserById, sendMessage, receiveMessages };
+const getMessagesSentByUser = async (senderId: string) => {
+  try {
+    const response = await fetch(`${send}/${senderId}`, {
+      method: 'GET',
+    });
+    const receivedMessages: Message[] = await response.json();
+    return receivedMessages;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+export {
+  logInUser,
+  getUsers,
+  getUserById,
+  sendMessage,
+  receiveMessages,
+  getMessagesSentByUser,
+};
