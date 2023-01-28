@@ -3,6 +3,8 @@ import CreatableSelect from 'react-select/creatable';
 
 import { User, UserSelect } from 'utils/interfaces';
 
+import { logInUser } from '../utils/api';
+
 interface RecipientInputProps {
   users: User[];
 }
@@ -14,20 +16,27 @@ function RecipientInput({ users }: RecipientInputProps) {
   }));
 
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<UserSelect[]>(optionList);
+  const [options, setOptions] = useState<UserSelect[]>([]);
   const [value, setValue] = useState<UserSelect | null>();
 
-  const createOption = (label: string) => ({
-    label,
-    value: label.toLowerCase().replace(/\W/g, ''),
-  });
+  const createOption = async (username: string) => {
+    const newUser = await logInUser({ username });
+    return {
+      value: newUser.currentUser?._id,
+      label: newUser.currentUser?.username,
+    };
+  };
 
   const handleCreate = (inputValue: string) => {
     setIsLoading(true);
-    setTimeout(() => {
-      const newOption = createOption(inputValue);
+    setTimeout(async () => {
+      const newOption = await createOption(inputValue);
       setIsLoading(false);
-      setOptions((prev) => [...prev, newOption]);
+      if (options.length) {
+        setOptions((prev) => [...prev, newOption]);
+      } else {
+        setOptions((prev) => [...prev, ...optionList, newOption]);
+      }
       setValue(newOption);
     }, 1000);
   };
@@ -41,7 +50,7 @@ function RecipientInput({ users }: RecipientInputProps) {
           isLoading={isLoading}
           onChange={(newValue) => setValue(newValue)}
           onCreateOption={handleCreate}
-          options={options}
+          options={options.length ? options : optionList}
           value={value}
         />
       </div>

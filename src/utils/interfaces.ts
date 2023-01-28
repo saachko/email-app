@@ -20,8 +20,8 @@ interface LoginResponse {
 }
 
 interface UserSelect {
-  value: string;
-  label: string;
+  value: string | undefined;
+  label: string | undefined;
 }
 
 export type {
