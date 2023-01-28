@@ -1,7 +1,8 @@
-import { login, responseStatuses, send, users } from './constants';
+import { login, receive, responseStatuses, send, users } from './constants';
 import {
   LoginFetchResponse,
   LoginUserData,
+  Message,
   MessageData,
   MessageFetchResponse,
   User,
@@ -93,4 +94,16 @@ const sendMessage = async (messageData: MessageData) => {
   }
 };
 
-export { logInUser, getUsers, getUserById, sendMessage };
+const receiveMessages = async (receiverId: string) => {
+  try {
+    const response = await fetch(`${receive}/${receiverId}`, {
+      method: 'GET',
+    });
+    const receivedMessages: Message[] = await response.json();
+    return receivedMessages;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+export { logInUser, getUsers, getUserById, sendMessage, receiveMessages };
