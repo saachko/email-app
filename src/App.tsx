@@ -29,7 +29,11 @@ function App() {
       <Route
         path="/"
         element={
-          <StartPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+          <StartPage
+            isLoggedIn={isLoggedIn}
+            setLoggedIn={setLoggedIn}
+            setCurrentUser={setCurrentUser}
+          />
         }
       />
       <Route

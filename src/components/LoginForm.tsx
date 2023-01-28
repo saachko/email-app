@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 import { responseStatuses } from 'utils/constants';
 
 import { logInUser } from '../utils/api';
-import { LoginResponse, LoginUserData } from '../utils/interfaces';
+import { LoginResponse, LoginUserData, User } from '../utils/interfaces';
 import SetState from '../utils/types';
 
 type LoginInputs = {
@@ -12,33 +12,39 @@ type LoginInputs = {
 };
 
 interface LoginFormProps {
-  isLoggedIn: boolean;
   setLoggedIn: SetState<boolean>;
+  setCurrentUser: SetState<User | null>;
+  setNotificationShown: SetState<boolean>;
+  setNotificationMessage: SetState<string>;
+  setNotificationVariant: SetState<string>;
 }
 
-function LoginForm({ isLoggedIn, setLoggedIn }: LoginFormProps) {
+function LoginForm({
+  setLoggedIn,
+  setCurrentUser,
+  setNotificationShown,
+  setNotificationMessage,
+  setNotificationVariant,
+}: LoginFormProps) {
   const [response, setResponse] = useState<LoginResponse | null>(null);
 
-  // useEffect(() => {
-  //   if (response) {
-  //     setNotificationMessage(response?.message);
-  //     setNotificationShown(true);
-  //     if (
-  //       response?.status === responseStatuses.status400 ||
-  //       response.status === responseStatuses.status403
-  //     ) {
-  //       setNotificationVariant('danger');
-  //       localStorage.removeItem('accessUserToken');
-  //     } else {
-  //       setNotificationVariant('primary');
-  //     }
-  //   }
-  // }, [response]);
+  useEffect(() => {
+    if (response) {
+      setNotificationMessage(response?.message);
+      setNotificationShown(true);
+      if (response?.status === responseStatuses.status400) {
+        setNotificationVariant('danger');
+        localStorage.removeItem('currentUserId');
+      } else {
+        setNotificationVariant('primary');
+      }
+    }
+  }, [response]);
 
   const handleResponse = async (loginResponse: LoginResponse) => {
     setResponse(loginResponse);
-    console.log(loginResponse);
     if (loginResponse?.status === responseStatuses.success) {
+      setCurrentUser(loginResponse.currentUser);
       setTimeout(() => setLoggedIn(true), 500);
     }
   };
