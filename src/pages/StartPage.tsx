@@ -1,7 +1,15 @@
 import React from 'react';
 
+import Greeting from '../components/Greeting';
+import LoginForm from '../components/LoginForm';
+
 function StartPage() {
-  return <div>StartPage</div>;
+  return (
+    <>
+      <Greeting />
+      <LoginForm />
+    </>
+  );
 }
 
 export default StartPage;
