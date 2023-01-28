@@ -38,7 +38,13 @@ function App() {
       />
       <Route
         path="/mail"
-        element={<MailPage isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />}
+        element={
+          <MailPage
+            isLoggedIn={isLoggedIn}
+            setLoggedIn={setLoggedIn}
+            currentUser={currentUser}
+          />
+        }
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
