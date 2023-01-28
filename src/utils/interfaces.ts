@@ -19,4 +19,15 @@ interface LoginResponse {
   message: string;
 }
 
-export type { User, LoginUserData, LoginFetchResponse, LoginResponse };
+interface UserSelect {
+  value: string;
+  label: string;
+}
+
+export type {
+  User,
+  LoginUserData,
+  LoginFetchResponse,
+  LoginResponse,
+  UserSelect,
+};

@@ -9,3 +9,15 @@
 .vh-50 {
   height: 50vh;
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dropdown-container {
+  width: 100%;
+}
