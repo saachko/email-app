@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 
 import { User, UserSelect } from 'utils/interfaces';
@@ -58,4 +58,4 @@ function RecipientInput({ users }: RecipientInputProps) {
   );
 }
 
-export default RecipientInput;
+export default memo(RecipientInput);
