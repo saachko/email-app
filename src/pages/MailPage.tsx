@@ -41,7 +41,7 @@ function MailPage({ isLoggedIn, setLoggedIn, currentUser }: MailPageProps) {
         username={currentUser ? currentUser.username : ''}
       />
       <div className="vh-75 d-flex flex-column flex-md-row justify-content-between gap-5">
-        <MessageForm users={users} />
+        <MessageForm users={users} currentUser={currentUser} />
         <div className="w-72">
           <Mailbox
             receivedMessages={receivedMessages}

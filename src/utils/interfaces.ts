@@ -50,6 +50,12 @@ interface MessageFetchResponse {
   message: string;
 }
 
+interface MessageResponse {
+  newMessage: Message | null;
+  status: number;
+  message: string;
+}
+
 export type {
   User,
   Message,
@@ -59,4 +65,5 @@ export type {
   UserSelect,
   MessageData,
   MessageFetchResponse,
+  MessageResponse,
 };

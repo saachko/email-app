@@ -78,14 +78,14 @@ const sendMessage = async (messageData: MessageData) => {
     });
     if (response.status === responseStatuses.status400) {
       return {
-        currentMessage: null,
+        newMessage: null,
         status: response.status,
         message: (await response.json()).message,
       };
     }
     const messageResponse: MessageFetchResponse = await response.json();
     return {
-      currentMessage: messageResponse.newMessage,
+      newMessage: messageResponse.newMessage,
       status: response.status,
       message: messageResponse.message,
     };
