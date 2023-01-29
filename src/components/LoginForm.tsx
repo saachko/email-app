@@ -41,7 +41,7 @@ function LoginForm({
     }
   }, [response]);
 
-  const handleResponse = async (loginResponse: LoginResponse) => {
+  const handleResponse = (loginResponse: LoginResponse) => {
     setResponse(loginResponse);
     if (loginResponse?.status === responseStatuses.success) {
       setCurrentUser(loginResponse.currentUser);
