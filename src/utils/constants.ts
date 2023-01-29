@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/';
+const baseUrl = 'https://email-backend-hut3.onrender.com/';
 const messages = `${baseUrl}messages`;
 const send = `${messages}/send`;
 const receive = `${baseUrl}messages/receive`;
