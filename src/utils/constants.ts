@@ -9,4 +9,9 @@ const responseStatuses = {
   status400: 400,
 };
 
-export { send, receive, users, login, responseStatuses };
+const emptyContainerText = {
+  received: 'Your inbox is empty :(',
+  sent: "You didn't any send messages",
+};
+
+export { send, receive, users, login, responseStatuses, emptyContainerText };
