@@ -4,7 +4,7 @@
 
 [Link to the deploy](https://saachko.github.io/email-app/)
 
-[Link to the backend repository](https://github.com/saachko/email-backend/tree/develop)
+[Link to the backend repository](https://github.com/saachko/email-backend/tree/develop2)
 
 > **Attention!** The backend is deployed on a free service render.com, so when you run the application for the first time, you need to wait a little bit. Thank you 🙏
 
@@ -17,7 +17,6 @@ At the start user have to enter his name (just name without password or anything
 - react
 - typescript
 - bootstrap
-- socket.io
 
 ## Additional tools:
 
