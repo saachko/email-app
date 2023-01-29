@@ -1,4 +1,11 @@
-import { login, receive, responseStatuses, send, users } from './constants';
+import {
+  login,
+  messages,
+  receive,
+  responseStatuses,
+  send,
+  users,
+} from './constants';
 import {
   LoginFetchResponse,
   LoginUserData,
@@ -96,6 +103,18 @@ const sendMessage = async (messageData: MessageData) => {
   }
 };
 
+const getAllMessages = async () => {
+  try {
+    const response = await fetch(`${messages}`, {
+      method: 'GET',
+    });
+    const fullMessagesList: Message[] = await response.json();
+    return fullMessagesList;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
 const receiveMessages = async (receiverId: string) => {
   try {
     const response = await fetch(`${receive}/${receiverId}`, {
@@ -125,6 +144,7 @@ export {
   getUsers,
   getUserById,
   sendMessage,
+  getAllMessages,
   receiveMessages,
   getMessagesSentByUser,
 };

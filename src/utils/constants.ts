@@ -1,5 +1,6 @@
 const baseUrl = 'http://localhost:3001/';
-const send = `${baseUrl}messages/send`;
+const messages = `${baseUrl}messages`;
+const send = `${messages}/send`;
 const receive = `${baseUrl}messages/receive`;
 const users = `${baseUrl}users`;
 const login = `${users}/login`;
@@ -14,4 +15,12 @@ const emptyContainerText = {
   sent: "You didn't any send messages",
 };
 
-export { send, receive, users, login, responseStatuses, emptyContainerText };
+export {
+  messages,
+  send,
+  receive,
+  users,
+  login,
+  responseStatuses,
+  emptyContainerText,
+};

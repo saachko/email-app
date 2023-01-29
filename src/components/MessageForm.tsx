@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import * as io from 'socket.io-client';
 
 import {
+  getAllMessages,
   getMessagesSentByUser,
   receiveMessages,
   sendMessage,
@@ -80,10 +81,12 @@ function MessageForm({
       const newMessagesList = (
         await receiveMessages(currentUser._id)
       ).reverse();
-      setReceivedMessages(newMessagesList);
-      setNewMessage(newMessagesList[0]);
+      if ((await getAllMessages()).reverse()[0].receiver === currentUser?._id) {
+        setReceivedMessages(newMessagesList);
+        setNewMessage(newMessagesList[0]);
+        setToastMessageShown(true);
+      }
     }
-    setToastMessageShown(true);
   };
 
   const handleSubmit: React.FormEventHandler<
@@ -118,7 +121,7 @@ function MessageForm({
 
   useEffect(() => {
     socket.on('receive_message', async () => {
-      if (currentUser) showNewMessage();
+      showNewMessage();
     });
   }, [socket]);
 
