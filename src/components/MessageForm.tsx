@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import * as io from 'socket.io-client';
 
-import { sendMessage } from '../utils/api';
+import {
+  getMessagesSentByUser,
+  receiveMessages,
+  sendMessage,
+} from '../utils/api';
 import { responseStatuses } from '../utils/constants';
 import {
+  Message,
   MessageData,
   MessageResponse,
   User,
@@ -18,6 +24,8 @@ interface MessageFormProps {
   setNotificationShown: SetState<boolean>;
   setNotificationMessage: SetState<string>;
   setNotificationVariant: SetState<string>;
+  setReceivedMessages: SetState<Message[]>;
+  setSentMessages: SetState<Message[]>;
 }
 
 type MessageInputs = {
@@ -26,12 +34,16 @@ type MessageInputs = {
   body: HTMLTextAreaElement;
 };
 
+const socket = io.connect('http://localhost:3001');
+
 function MessageForm({
   users,
   currentUser,
   setNotificationShown,
   setNotificationMessage,
   setNotificationVariant,
+  setReceivedMessages,
+  setSentMessages,
 }: MessageFormProps) {
   const [receiverId, setReceiverId] = useState('');
   const [receiverName, setReceiverName] = useState('');
@@ -67,6 +79,14 @@ function MessageForm({
     const form = event.currentTarget;
     const { subject, body } = form;
     if (currentUser) {
+      socket.emit('send_message', {
+        subject: subject.value ? subject.value : '(No subject)',
+        body: body.value,
+        sender: currentUser._id,
+        senderName: currentUser.username,
+        receiver: receiverId,
+        receiverName,
+      });
       await confirmMessage({
         subject: subject.value ? subject.value : '(No subject)',
         body: body.value,
@@ -75,10 +95,20 @@ function MessageForm({
         receiver: receiverId,
         receiverName,
       });
+      setSentMessages((await getMessagesSentByUser(currentUser._id)).reverse());
+      if (currentUser._id === receiverId)
+        setReceivedMessages((await receiveMessages(currentUser._id)).reverse());
     }
     setSelectValue(null);
     form.reset();
   };
+
+  useEffect(() => {
+    socket.on('receive_message', async () => {
+      if (currentUser)
+        setReceivedMessages((await receiveMessages(currentUser._id)).reverse());
+    });
+  }, [socket]);
 
   return (
     <Form onSubmit={handleSubmit}>

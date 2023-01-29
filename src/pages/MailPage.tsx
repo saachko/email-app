@@ -56,6 +56,8 @@ function MailPage({ isLoggedIn, setLoggedIn, currentUser }: MailPageProps) {
           setNotificationShown={setNotificationShown}
           setNotificationMessage={setNotificationMessage}
           setNotificationVariant={setNotificationVariant}
+          setReceivedMessages={setReceivedMessages}
+          setSentMessages={setSentMessages}
         />
         <div className="w-72">
           <Mailbox
