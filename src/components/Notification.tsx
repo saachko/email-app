@@ -5,17 +5,22 @@ import SetState from '../utils/types';
 
 interface NotificationProps {
   setNotificationShown: SetState<boolean>;
+  setNotificationVariant: SetState<string>;
   variant: string;
   message: string;
 }
 
 function Notification({
   setNotificationShown,
+  setNotificationVariant,
   variant,
   message,
 }: NotificationProps) {
   useEffect(() => {
-    setTimeout(() => setNotificationShown(false), 3000);
+    setTimeout(() => {
+      setNotificationShown(false);
+      setNotificationVariant('');
+    }, 3000);
   }, [variant, message]);
 
   return (

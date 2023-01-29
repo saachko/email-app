@@ -1,0 +1,142 @@
+$color-0: #000;
+$color-1: #0d6efd;
+$color-2: #fff;
+%mail-after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 15px;
+  height: 4px;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+}
+%mail-before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 6px;
+  background: black;
+}
+%success-after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 11px;
+  width: 15px;
+  height: 8px;
+  border-bottom: 2px solid $color-1;
+  border-left: 2px solid $color-1;
+  transform: rotate(-45deg);
+}
+.container {
+  position: absolute;
+  bottom: 30px;
+  left: calc(50% - 240px);
+  width: 540px;
+}
+.animation {
+  width: 540px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.i-mail {
+  width: 40px;
+  height: 30px;
+  border-radius: 5% 5%;
+  border: 2px solid black;
+  position: relative;
+  animation: transformS 0.3s linear;
+
+  &:after {
+    @extend %mail-after;
+  }
+  &:before {
+    @extend %mail-before;
+  }
+  @keyframes transformS {
+    50% {
+      transform: scale(0.5, 0.5);
+      opacity: 0.5;
+    }
+  }
+  .mail-anim {
+    @extend .i-mail;
+    margin: -2px 0 0 -2px;
+    animation: moveL 0.8s linear;
+    &:after {
+      @extend %mail-after;
+    }
+    &:before {
+      @extend %mail-before;
+    }
+    @keyframes moveL {
+      100% {
+        transform: translateX(220px) rotateY(90deg);
+      }
+    }
+  }
+}
+.line {
+  padding: 1px 210px;
+  background-image: linear-gradient(
+    to right,
+    #000 30%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: top;
+  background-size: 15px 2px;
+  background-repeat: repeat-x;
+}
+.i-success {
+  width: 40px;
+  height: 30px;
+  border-radius: 5% 5%;
+  border: 2px solid $color-1;
+  position: relative;
+  animation: transformB 0.3s 1.4s linear forwards;
+  &:after {
+    @extend %success-after;
+    animation: transformBA 0.3s 1.4s linear forwards;
+  }
+  @keyframes transformB {
+    50% {
+      transform: scale(1.5, 1.5);
+      background: $color-1;
+    }
+    100% {
+      background: $color-1;
+    }
+  }
+  @keyframes transformBA {
+    100% {
+      border-bottom: 2px solid $color-2;
+      border-left: 2px solid $color-2;
+    }
+  }
+  .success-anim {
+    @extend .i-success;
+    margin: -2px 0 0 -2px;
+    animation: moveR 0.8s 1s linear;
+    &:after {
+      @extend %success-after;
+    }
+    @keyframes moveR {
+      0% {
+        transform: translateX(-220px) rotateY(90deg);
+      }
+      50% {
+        transform: translateX(0) rotateY(0);
+      }
+    }
+  }
+}
+.message {
+  text-align: center;
+  margin-top: 10px;
+  font-family: Roboto, sans-serif;
+}

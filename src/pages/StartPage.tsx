@@ -42,6 +42,7 @@ function StartPage({
           variant={notificationVariant}
           message={notificationMessage}
           setNotificationShown={setNotificationShown}
+          setNotificationVariant={setNotificationVariant}
         />
       )}
     </div>

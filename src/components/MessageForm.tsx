@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 import { sendMessage } from '../utils/api';
@@ -9,11 +9,15 @@ import {
   User,
   UserSelect,
 } from '../utils/interfaces';
+import SetState from '../utils/types';
 import RecipientInput from './RecipientInput';
 
 interface MessageFormProps {
   users: User[];
   currentUser: User | null;
+  setNotificationShown: SetState<boolean>;
+  setNotificationMessage: SetState<string>;
+  setNotificationVariant: SetState<string>;
 }
 
 type MessageInputs = {
@@ -22,17 +26,30 @@ type MessageInputs = {
   body: HTMLTextAreaElement;
 };
 
-function MessageForm({ users, currentUser }: MessageFormProps) {
+function MessageForm({
+  users,
+  currentUser,
+  setNotificationShown,
+  setNotificationMessage,
+  setNotificationVariant,
+}: MessageFormProps) {
   const [receiverId, setReceiverId] = useState('');
   const [receiverName, setReceiverName] = useState('');
   const [selectValue, setSelectValue] = useState<UserSelect | null>(null);
   const [response, setResponse] = useState<MessageResponse | null>(null);
 
-  const handleResponse = async (messageResponse: MessageResponse) => {
-    setResponse(messageResponse);
-    if (messageResponse?.status === responseStatuses.success) {
-      console.log(messageResponse.newMessage);
+  useEffect(() => {
+    if (response) {
+      setNotificationMessage(response?.message);
+      setNotificationShown(true);
+      if (response?.status === responseStatuses.status400) {
+        setNotificationVariant('danger');
+      }
     }
+  }, [response]);
+
+  const handleResponse = (messageResponse: MessageResponse) => {
+    setResponse(messageResponse);
   };
 
   const confirmMessage = async (messageData: MessageData) => {

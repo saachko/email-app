@@ -45,7 +45,7 @@ function MessageItem({
           </p>
         </div>
       </Accordion.Header>
-      <Accordion.Body className="message">{text}</Accordion.Body>
+      <Accordion.Body className="message mt-0">{text}</Accordion.Body>
     </Accordion.Item>
   );
 }
