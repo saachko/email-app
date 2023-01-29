@@ -34,8 +34,16 @@ $color-2: #fff;
 .container {
   position: absolute;
   bottom: 30px;
-  left: calc(50% - 240px);
+  left: calc(50% - 45vw);
   width: 540px;
+  max-width: 90vw !important;
+  background-color: #cce5ff;
+  padding: 20px 40px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  color: #0d6efd;
 }
 .animation {
   width: 540px;
@@ -43,6 +51,9 @@ $color-2: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 615px) {
+    display: none;
+  }
 }
 .i-mail {
   width: 40px;
@@ -139,4 +150,7 @@ $color-2: #fff;
   text-align: center;
   margin-top: 10px;
   font-family: Roboto, sans-serif;
+  @media (max-width: 615px) {
+    margin-bottom: 20px;
+  }
 }
