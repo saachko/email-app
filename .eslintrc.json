@@ -25,7 +25,8 @@
   "plugins": ["@typescript-eslint", "import", "react", "prettier"],
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-extraneous-dependencies": "off"
   },
   "settings": {
     "import/resolver": {

@@ -18,6 +18,10 @@
   }
 }
 
+.message {
+  background-color: var(--bs-accordion-active-bg);
+}
+
 .dropdown {
   display: flex;
   flex-direction: column;

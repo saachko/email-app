@@ -8,7 +8,9 @@ interface Message {
   subject: string;
   body: string;
   sender: string;
+  senderName: string;
   receiver: string;
+  receiverName: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,7 +40,9 @@ interface MessageData {
   subject: string;
   body: string;
   sender: string;
+  senderName: string;
   receiver: string;
+  receiverName: string;
 }
 interface MessageFetchResponse {
   newMessage: Message;
