@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Greeting from '../components/Greeting';
@@ -48,4 +48,4 @@ function StartPage({
   );
 }
 
-export default StartPage;
+export default memo(StartPage);

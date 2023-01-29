@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import Header from '../components/Header';
@@ -53,4 +53,4 @@ function MailPage({ isLoggedIn, setLoggedIn, currentUser }: MailPageProps) {
   );
 }
 
-export default MailPage;
+export default memo(MailPage);
