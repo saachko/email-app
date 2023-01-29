@@ -13,6 +13,11 @@ interface MailboxProps {
 }
 
 function Mailbox({ receivedMessages, sentMessages }: MailboxProps) {
+  const parseDate = (dateFromDatabase: string) => {
+    const parsedDate = new Date(dateFromDatabase);
+    return parsedDate.toLocaleString();
+  };
+
   return (
     <Tabs defaultActiveKey="received" className="mb-3" justify>
       <Tab eventKey="received" title="Inbox">
@@ -22,7 +27,7 @@ function Mailbox({ receivedMessages, sentMessages }: MailboxProps) {
               <MessageItem
                 key={v4()}
                 eventKey={`${index}`}
-                date={message.createdAt.toLocaleString('ru-RU')}
+                date={parseDate(message.createdAt)}
                 from={message.senderName}
                 to={message.receiverName}
                 subject={message.subject}
@@ -41,7 +46,7 @@ function Mailbox({ receivedMessages, sentMessages }: MailboxProps) {
               <MessageItem
                 key={v4()}
                 eventKey={`${index}`}
-                date={message.createdAt.toLocaleString('ru-RU')}
+                date={parseDate(message.createdAt)}
                 from={message.senderName}
                 to={message.receiverName}
                 subject={message.subject}

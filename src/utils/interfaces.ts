@@ -11,8 +11,8 @@ interface Message {
   senderName: string;
   receiver: string;
   receiverName: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface LoginUserData {
