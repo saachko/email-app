@@ -34,3 +34,18 @@
 .dropdown-container {
   width: 100%;
 }
+
+@keyframes toast {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.toast-animation {
+  animation-duration: 0.5s;
+  animation-name: toast;
+}

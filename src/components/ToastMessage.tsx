@@ -19,7 +19,7 @@ function ToastMessage({
   messageBody,
 }: ToastMessageProps) {
   return (
-    <ToastContainer className="p-3" position="bottom-start">
+    <ToastContainer className="p-3 toast-animation" position="bottom-start">
       <Toast
         animation
         onClose={() => setShown(false)}
