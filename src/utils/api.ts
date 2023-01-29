@@ -26,10 +26,12 @@ const logInUser = async (userData: LoginUserData) => {
       };
     }
     const loginResponse: LoginFetchResponse = await response.json();
-    localStorage.setItem(
-      'currentUserId',
-      JSON.stringify(loginResponse.user._id)
-    );
+    if (!localStorage.getItem('currentUserId')) {
+      localStorage.setItem(
+        'currentUserId',
+        JSON.stringify(loginResponse.user._id)
+      );
+    }
     return {
       currentUser: loginResponse.user,
       status: response.status,

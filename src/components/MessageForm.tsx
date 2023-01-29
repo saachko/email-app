@@ -3,7 +3,12 @@ import { Button, Form } from 'react-bootstrap';
 
 import { sendMessage } from '../utils/api';
 import { responseStatuses } from '../utils/constants';
-import { MessageData, MessageResponse, User } from '../utils/interfaces';
+import {
+  MessageData,
+  MessageResponse,
+  User,
+  UserSelect,
+} from '../utils/interfaces';
 import RecipientInput from './RecipientInput';
 
 interface MessageFormProps {
@@ -20,6 +25,7 @@ type MessageInputs = {
 function MessageForm({ users, currentUser }: MessageFormProps) {
   const [receiverId, setReceiverId] = useState('');
   const [receiverName, setReceiverName] = useState('');
+  const [selectValue, setSelectValue] = useState<UserSelect | null>(null);
   const [response, setResponse] = useState<MessageResponse | null>(null);
 
   const handleResponse = async (messageResponse: MessageResponse) => {
@@ -53,6 +59,7 @@ function MessageForm({ users, currentUser }: MessageFormProps) {
         receiverName,
       });
     }
+    setSelectValue(null);
     form.reset();
   };
 
@@ -67,6 +74,8 @@ function MessageForm({ users, currentUser }: MessageFormProps) {
           name="receiver"
           setReceiverId={setReceiverId}
           setReceiverName={setReceiverName}
+          value={selectValue}
+          setValue={setSelectValue}
         />
       </Form.Group>
       <Form.Group className="mb-4 d-flex" controlId="formSubject">

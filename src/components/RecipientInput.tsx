@@ -11,6 +11,8 @@ interface RecipientInputProps {
   name: string;
   setReceiverId: SetState<string>;
   setReceiverName: SetState<string>;
+  value: UserSelect | null;
+  setValue: SetState<UserSelect | null>;
 }
 
 function RecipientInput({
@@ -18,6 +20,8 @@ function RecipientInput({
   name,
   setReceiverId,
   setReceiverName,
+  value,
+  setValue,
 }: RecipientInputProps) {
   const optionList: UserSelect[] = users.map((user) => ({
     value: user._id,
@@ -26,7 +30,6 @@ function RecipientInput({
 
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<UserSelect[]>([]);
-  const [value, setValue] = useState<UserSelect | null>();
 
   useEffect(() => {
     if (
