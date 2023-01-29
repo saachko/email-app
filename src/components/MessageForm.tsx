@@ -17,6 +17,7 @@ import {
 } from '../utils/interfaces';
 import SetState from '../utils/types';
 import RecipientInput from './RecipientInput';
+import ToastMessage from './ToastMessage';
 
 interface MessageFormProps {
   users: User[];
@@ -49,6 +50,8 @@ function MessageForm({
   const [receiverName, setReceiverName] = useState('');
   const [selectValue, setSelectValue] = useState<UserSelect | null>(null);
   const [response, setResponse] = useState<MessageResponse | null>(null);
+  const [newMessage, setNewMessage] = useState<MessageData | null>(null);
+  const [isToastMessageShown, setToastMessageShown] = useState(false);
 
   useEffect(() => {
     if (response) {
@@ -70,6 +73,17 @@ function MessageForm({
     } catch (error) {
       throw new Error(`${error}`);
     }
+  };
+
+  const showNewMessage = async () => {
+    if (currentUser) {
+      const newMessagesList = (
+        await receiveMessages(currentUser._id)
+      ).reverse();
+      setReceivedMessages(newMessagesList);
+      setNewMessage(newMessagesList[0]);
+    }
+    setToastMessageShown(true);
   };
 
   const handleSubmit: React.FormEventHandler<
@@ -96,8 +110,7 @@ function MessageForm({
         receiverName,
       });
       setSentMessages((await getMessagesSentByUser(currentUser._id)).reverse());
-      if (currentUser._id === receiverId)
-        setReceivedMessages((await receiveMessages(currentUser._id)).reverse());
+      if (currentUser._id === receiverId) showNewMessage();
     }
     setSelectValue(null);
     form.reset();
@@ -105,45 +118,55 @@ function MessageForm({
 
   useEffect(() => {
     socket.on('receive_message', async () => {
-      if (currentUser)
-        setReceivedMessages((await receiveMessages(currentUser._id)).reverse());
+      if (currentUser) showNewMessage();
     });
   }, [socket]);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3 d-flex" controlId="formUsers">
-        <Form.Label column sm="3" className="me-2">
-          Recipient
-        </Form.Label>
-        <RecipientInput
-          users={users}
-          name="receiver"
-          setReceiverId={setReceiverId}
-          setReceiverName={setReceiverName}
-          value={selectValue}
-          setValue={setSelectValue}
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3 d-flex" controlId="formUsers">
+          <Form.Label column sm="3" className="me-2">
+            Recipient
+          </Form.Label>
+          <RecipientInput
+            users={users}
+            name="receiver"
+            setReceiverId={setReceiverId}
+            setReceiverName={setReceiverName}
+            value={selectValue}
+            setValue={setSelectValue}
+          />
+        </Form.Group>
+        <Form.Group className="mb-4 d-flex" controlId="formSubject">
+          <Form.Label column sm="3" className="me-2">
+            Subject
+          </Form.Label>
+          <Form.Control type="text" placeholder="(No subject)" name="subject" />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formMessage">
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Your message..."
+            name="body"
+            required
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" className="w-100 mt-2">
+          Send message
+        </Button>
+      </Form>
+      {isToastMessageShown && (
+        <ToastMessage
+          isShown={isToastMessageShown}
+          setShown={setToastMessageShown}
+          senderName={newMessage?.senderName}
+          subject={newMessage?.subject}
+          messageBody={newMessage?.body}
         />
-      </Form.Group>
-      <Form.Group className="mb-4 d-flex" controlId="formSubject">
-        <Form.Label column sm="3" className="me-2">
-          Subject
-        </Form.Label>
-        <Form.Control type="text" placeholder="(No subject)" name="subject" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formMessage">
-        <Form.Control
-          as="textarea"
-          rows={3}
-          placeholder="Your message..."
-          name="body"
-          required
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit" className="w-100 mt-2">
-        Send message
-      </Button>
-    </Form>
+      )}
+    </>
   );
 }
 
