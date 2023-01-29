@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import * as io from 'socket.io-client';
 
 import {
   getAllMessages,
@@ -8,7 +7,7 @@ import {
   receiveMessages,
   sendMessage,
 } from '../utils/api';
-import { responseStatuses } from '../utils/constants';
+import { defaultMessage, responseStatuses } from '../utils/constants';
 import {
   Message,
   MessageData,
@@ -35,10 +34,6 @@ type MessageInputs = {
   subject: HTMLInputElement;
   body: HTMLTextAreaElement;
 };
-
-const socket = io.connect('https://email-backend-hut3.onrender.com/', {
-  secure: true,
-});
 
 function MessageForm({
   users,
@@ -78,19 +73,6 @@ function MessageForm({
     }
   };
 
-  const showNewMessage = async () => {
-    if (currentUser) {
-      const newMessagesList = (
-        await receiveMessages(currentUser._id)
-      ).reverse();
-      if ((await getAllMessages()).reverse()[0].receiver === currentUser?._id) {
-        setReceivedMessages(newMessagesList);
-        setNewMessage(newMessagesList[0]);
-        setToastMessageShown(true);
-      }
-    }
-  };
-
   const handleSubmit: React.FormEventHandler<
     HTMLFormElement & MessageInputs
   > = async (event) => {
@@ -98,14 +80,6 @@ function MessageForm({
     const form = event.currentTarget;
     const { subject, body } = form;
     if (currentUser) {
-      socket.emit('send_message', {
-        subject: subject.value ? subject.value : '(No subject)',
-        body: body.value,
-        sender: currentUser._id,
-        senderName: currentUser.username,
-        receiver: receiverId,
-        receiverName,
-      });
       await confirmMessage({
         subject: subject.value ? subject.value : '(No subject)',
         body: body.value,
@@ -115,17 +89,26 @@ function MessageForm({
         receiverName,
       });
       setSentMessages((await getMessagesSentByUser(currentUser._id)).reverse());
-      if (currentUser._id === receiverId) showNewMessage();
     }
     setSelectValue(null);
     form.reset();
   };
 
-  useEffect(() => {
-    socket.on('receive_message', async () => {
-      showNewMessage();
-    });
-  }, [socket]);
+  const showNewMessage = async () => {
+    if (currentUser) {
+      if ((await getAllMessages()).reverse()[0].receiver === currentUser?._id) {
+        const newMessagesList = (
+          await receiveMessages(currentUser._id)
+        ).reverse();
+        setReceivedMessages(newMessagesList);
+        setNewMessage(newMessagesList[0]);
+        setToastMessageShown(true);
+        await sendMessage(defaultMessage);
+      }
+    }
+  };
+
+  setInterval(showNewMessage, 5000);
 
   return (
     <>
