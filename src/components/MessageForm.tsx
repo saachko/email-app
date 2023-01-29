@@ -38,6 +38,7 @@ type MessageInputs = {
 
 const socket = io.connect('https://email-backend-hut3.onrender.com/', {
   secure: true,
+  withCredentials: true,
 });
 
 function MessageForm({
