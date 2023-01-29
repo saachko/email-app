@@ -30,8 +30,12 @@ function MailPage({ isLoggedIn, setLoggedIn, currentUser }: MailPageProps) {
       if (currentUserId) {
         const data = await getUsers();
         setUsers(data);
-        setReceivedMessages(await receiveMessages(JSON.parse(currentUserId)));
-        setSentMessages(await getMessagesSentByUser(JSON.parse(currentUserId)));
+        setReceivedMessages(
+          (await receiveMessages(JSON.parse(currentUserId))).reverse()
+        );
+        setSentMessages(
+          (await getMessagesSentByUser(JSON.parse(currentUserId))).reverse()
+        );
       }
     })();
   }, [currentUser]);
