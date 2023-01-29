@@ -36,7 +36,9 @@ type MessageInputs = {
   body: HTMLTextAreaElement;
 };
 
-const socket = io.connect('http://localhost:3001');
+const socket = io.connect('https://email-backend-hut3.onrender.com/', {
+  secure: true,
+});
 
 function MessageForm({
   users,
