@@ -6,6 +6,8 @@
 
 [Link to the backend repository](https://github.com/saachko/email-backend/tree/develop2)
 
+[Link to the video](https://www.youtube.com/watch?v=kPYA3PgPIig)
+
 > **Attention!** The backend is deployed on a free service render.com, so when you run the application for the first time, you need to wait a little bit. Thank you 🙏
 
 ## Usage
