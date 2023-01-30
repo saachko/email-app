@@ -103,16 +103,11 @@ const sendMessage = async (messageData: MessageData) => {
   }
 };
 
-const getAllMessages = async () => {
-  try {
-    const response = await fetch(`${messages}`, {
-      method: 'GET',
-    });
-    const fullMessagesList: Message[] = await response.json();
-    return fullMessagesList;
-  } catch (error) {
-    throw new Error(`${error}`);
-  }
+const getLastMessage = async () => {
+  const response = await fetch(`${messages}`, {
+    method: 'GET',
+  });
+  return response.json();
 };
 
 const receiveMessages = async (receiverId: string) => {
@@ -144,7 +139,7 @@ export {
   getUsers,
   getUserById,
   sendMessage,
-  getAllMessages,
+  getLastMessage,
   receiveMessages,
   getMessagesSentByUser,
 };

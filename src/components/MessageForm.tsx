@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 import {
-  getAllMessages,
+  getLastMessage,
   getMessagesSentByUser,
   receiveMessages,
   sendMessage,
 } from '../utils/api';
-import { defaultMessage, responseStatuses } from '../utils/constants';
+import { responseStatuses } from '../utils/constants';
 import {
   Message,
   MessageData,
+  MessageOnSubscribe,
   MessageResponse,
   User,
   UserSelect,
@@ -50,6 +51,32 @@ function MessageForm({
   const [response, setResponse] = useState<MessageResponse | null>(null);
   const [newMessage, setNewMessage] = useState<MessageData | null>(null);
   const [isToastMessageShown, setToastMessageShown] = useState(false);
+
+  const subscribeOnNewMessages = async () => {
+    try {
+      const latestMessage: MessageOnSubscribe = await getLastMessage();
+      if (currentUser) {
+        if (latestMessage.receiver === currentUser?._id) {
+          setReceivedMessages(
+            (await receiveMessages(currentUser._id)).reverse()
+          );
+          setNewMessage((await receiveMessages(currentUser._id)).reverse()[0]);
+          setTimeout(() => {
+            setToastMessageShown(true);
+          }, 500);
+        }
+      }
+      await subscribeOnNewMessages();
+    } catch (error) {
+      setTimeout(() => {
+        subscribeOnNewMessages();
+      }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    subscribeOnNewMessages();
+  }, []);
 
   useEffect(() => {
     if (response) {
@@ -93,22 +120,6 @@ function MessageForm({
     setSelectValue(null);
     form.reset();
   };
-
-  const showNewMessage = async () => {
-    if (currentUser) {
-      if ((await getAllMessages()).reverse()[0].receiver === currentUser?._id) {
-        const newMessagesList = (
-          await receiveMessages(currentUser._id)
-        ).reverse();
-        setReceivedMessages(newMessagesList);
-        setNewMessage(newMessagesList[0]);
-        setToastMessageShown(true);
-        await sendMessage(defaultMessage);
-      }
-    }
-  };
-
-  setInterval(showNewMessage, 5000);
 
   return (
     <>

@@ -56,6 +56,16 @@ interface MessageResponse {
   message: string;
 }
 
+interface MessageOnSubscribe {
+  subject: string;
+  body: string;
+  sender: string;
+  senderName: string;
+  receiver: string;
+  receiverName: string;
+  _id: string;
+}
+
 export type {
   User,
   Message,
@@ -66,4 +76,5 @@ export type {
   MessageData,
   MessageFetchResponse,
   MessageResponse,
+  MessageOnSubscribe,
 };
