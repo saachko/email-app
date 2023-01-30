@@ -15,14 +15,10 @@ function Header({ setLoggedIn, username }: HeaderProps) {
   };
 
   return (
-    <Nav
-      className="justify-content-between mb-4"
-      activeKey="/auth-app"
-      variant="pills"
-    >
+    <Nav className="justify-content-between mb-4" activeKey="/" variant="pills">
       <h3 className="text-primary">Welcome, {username}!</h3>
       <Nav.Item className="hover">
-        <Nav.Link href="/auth-app" onClick={logOut}>
+        <Nav.Link href="/" onClick={logOut}>
           Log out
         </Nav.Link>
       </Nav.Item>
