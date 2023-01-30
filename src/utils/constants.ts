@@ -1,5 +1,3 @@
-import { MessageData } from './interfaces';
-
 const baseUrl = 'https://email-backend2.onrender.com/';
 const messages = `${baseUrl}messages`;
 const send = `${messages}/send`;
@@ -17,15 +15,6 @@ const emptyContainerText = {
   sent: "You didn't any send messages",
 };
 
-const defaultMessage: MessageData = {
-  subject: 'default',
-  body: 'default',
-  sender: '63d6c1d8bb66eeff34d751c4',
-  senderName: 'test3',
-  receiver: '63d6c1d8bb66eeff34d751c4',
-  receiverName: 'test3',
-};
-
 export {
   messages,
   send,
@@ -34,5 +23,4 @@ export {
   login,
   responseStatuses,
   emptyContainerText,
-  defaultMessage,
 };
