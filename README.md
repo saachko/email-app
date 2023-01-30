@@ -2,7 +2,7 @@
 
 **Email-app** is a web-application for sending and receiving emails in life-time..
 
-[Link to the deploy](https://saachko.github.io/email-app/)
+[Link to the deploy](https://email-app-saachko.netlify.app/)
 
 [Link to the backend repository](https://github.com/saachko/email-backend/tree/develop2)
 
