@@ -8,7 +8,7 @@ import {
   receiveMessages,
   sendMessage,
 } from '../utils/api';
-import { responseStatuses } from '../utils/constants';
+import { responseStatuses, socketUrl } from '../utils/constants';
 import {
   Message,
   MessageData,
@@ -36,7 +36,7 @@ type MessageInputs = {
   body: HTMLTextAreaElement;
 };
 
-const socket = io.connect('https://email-backend-hut3.onrender.com/');
+const socket = io.connect(socketUrl);
 
 function MessageForm({
   users,

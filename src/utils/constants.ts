@@ -5,6 +5,8 @@ const receive = `${baseUrl}messages/receive`;
 const users = `${baseUrl}users`;
 const login = `${users}/login`;
 
+const socketUrl = 'wss://email-backend-hut3.onrender.com/';
+
 const responseStatuses = {
   success: 200,
   status400: 400,
@@ -21,6 +23,7 @@ export {
   receive,
   users,
   login,
+  socketUrl,
   responseStatuses,
   emptyContainerText,
 };
