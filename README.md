@@ -1,14 +1,12 @@
 # Email-app
 
-**Email-app** is a web-application for sending and receiving emails in life-time..
+**Email-app** is a web-application for sending and receiving emails in life-time.
 
-[Link to the deploy](https://saachko.github.io/email-app/) or [Another deploy link](https://email-app-flax.vercel.app/)
+[Link to the deploy](https://email-app-socket.netlify.app/)
 
 [Link to the backend repository](https://github.com/saachko/email-backend/tree/develop)
 
 > **Attention!** The backend is deployed on a free service render.com, so when you run the application for the first time, you need to wait a little bit. Thank you 🙏
-
-> To make sockets work turn on VPN, please.
 
 ## Usage
 
