@@ -84,7 +84,9 @@ function MessageForm({
       if ((await getAllMessages()).reverse()[0].receiver === currentUser?._id) {
         setReceivedMessages(newMessagesList);
         setNewMessage(newMessagesList[0]);
-        setToastMessageShown(true);
+        setTimeout(() => {
+          setToastMessageShown(true);
+        }, 1000);
       }
     }
   };
